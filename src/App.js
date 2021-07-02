@@ -12,16 +12,23 @@ class App extends Component {
 		}
 	}
 
-	onSearchChange(event){
-		console.log(event.target.value);
+	onSearchChange = (event) =>{ //永遠記得用 arrow function 
+		//更新satate的寫法，而不用寫成 this.state.searchfield =...
+		this.setState({ searchfield: event.target.value})
+		
 	}
 
 	render(){
+		//讓 card list 即時反應
+		const filteredRobots = this.state.robots.filter(robot=>{
+			return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+		})
 		return(
 			<div className='tc'>
 			<h1>ROBOTS FRIENDS</h1>
 			<SearchBox searchChange={this.onSearchChange}/>
-	  		<CardList robots={this.state.robots}/> 
+		{/*searchChange原本是 prop 在這裡又成了 function*/}
+	  		<CardList robots={filteredRobots} /> 
 	  		</div>
 			);
 		}
