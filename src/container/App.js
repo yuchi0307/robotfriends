@@ -1,6 +1,7 @@
 import React, { Component }from 'react';
-import CardList from './CardList'
-import SearchBox from './SearchBox'
+import CardList from '../components/CardList'
+import SearchBox from '../components/SearchBox'
+import Scroll from '../components/Scroll'
 // import { robots } from './robots' 
 import './App.css';
 class App extends Component {
@@ -32,9 +33,10 @@ class App extends Component {
 
 	render(){
 		console.log('render');
+		const {robots, searchfield} = this.state
 		//讓 card list 即時反應
-		const filteredRobots = this.state.robots.filter(robot=>{
-			return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+		const filteredRobots = robots.filter(robot=>{
+			return robot.name.toLowerCase().includes(searchfield.toLowerCase())
 		})
 		if(this.state.robots.length === 0)
 		{
@@ -47,7 +49,9 @@ class App extends Component {
 				<h1 className='f1'>ROBOTS FRIENDS</h1>
 				<SearchBox searchChange={this.onSearchChange}/>
 			{/*searchChange原本是 prop 在這裡又成了 function*/}
+				<Scroll>
 		  		<CardList robots={filteredRobots} /> 
+		  		</Scroll>
 		  		</div>
 				);
 			}
